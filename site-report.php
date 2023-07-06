@@ -4,10 +4,9 @@ use \WP_CLI, \JsonException;
 use function WP_CLI\Utils\make_progress_bar;
 use function WP_CLI\Utils\format_items;
 
-if ( ! class_exists(WP_CLI::class) ) {
+if (! defined('WP_CLI')) {
     return;
 }
-
 /**
  * Plugin Name:     site-report
  * Plugin URI:      https://gilzow.com/site-report
@@ -35,6 +34,11 @@ class SiteReport
      * ___
      * default: table
      * options
+     *  - table
+     *  - json
+     *  - csv
+     *  - yaml
+     * ---
      *
      * ## EXAMPLES
      *

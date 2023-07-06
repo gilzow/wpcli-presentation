@@ -27,18 +27,29 @@ class SiteReporter
      * [--metadata=<value>]
      * : a comma seperated list of meta_keys that we want included in the report
      *
+     * [--format=<format>]
+     * ___
+     * default: table
+     * options
+     *  - table
+     *  - json
+     *  - csv
+     *  - yaml
+     * ---
+     *
      * ## EXAMPLES
      *      # Generate a report
      *      $ wp site report --metadata=owner,division
      *
-     * @param $args
-     * @param $assoc_args
+     * @param array $args
+     * @param array $assoc_args
      * @return void
      */
-    public function __invoke($args, $assoc_args) {
+    public function __invoke(array $args, array $assoc_args): void
+    {
         $defaultKeys = array_fill_keys(['blog_id','domain','registered','last_updated'],'');
         $arySites = get_sites();
-
+        $sites = [];
         foreach ($arySites as $siteid=>$site) {
             $site = array_intersect_key((array)$site,$defaultKeys);
 
@@ -55,7 +66,7 @@ class SiteReporter
             $sites[$siteid] = $site;
         }
 
-        format_items('table',$sites,array_keys($sites[0]));
+        format_items($assoc_args['format'],$sites,array_keys($sites[0]));
         WP_CLI::success("Report Generated.");
     }
 }
