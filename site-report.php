@@ -31,7 +31,8 @@ class SiteReport
      * : Comma-separated list of meta field values to include in the report
      *
      * [--format=<format>]
-     * ___
+     * : format to use for output
+     * ---
      * default: table
      * options
      *  - table

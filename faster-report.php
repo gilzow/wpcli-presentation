@@ -28,7 +28,8 @@ class SiteReporter
      * : a comma seperated list of meta_keys that we want included in the report
      *
      * [--format=<format>]
-     * ___
+     * : format to use for output
+     * ---
      * default: table
      * options
      *  - table
