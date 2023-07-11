@@ -23,6 +23,7 @@ if (! defined('WP_CLI')) {
 class SiteReport
 {
     protected array $sites;
+
     /**
      * Returns a multisite report with extended data via metadata
      * ## OPTIONS
@@ -43,11 +44,11 @@ class SiteReport
      *
      * ## EXAMPLES
      *
-     * 		# Display a multisite report
-     * 		$ wp site report --metadata=owner,ticketnumber,division
+     *        # Display a multisite report
+     *        $ wp site report --metadata=owner,ticketnumber,division
      *
-     * @param $args
-     * @param $assoc_args
+     * @param array $args
+     * @param array $assoc_args
      * @return void
      */
     public function __invoke(array $args, array $assoc_args) : void {
@@ -63,15 +64,10 @@ class SiteReport
         $progress = make_progress_bar( 'Generating report...', count($this->sites) );
 
         if(isset($assoc_args['metadata']) && !empty($assoc_args['metadata'])) {
-            //@todo should we support an "all" option?
-            //If we support an all, the base keys would also have to be dynamically built since not all sites will
-            //have all keys. how do we then update sites that have already been processed to update them with the new
-            //meta keys they dont possess ?
             // let's get the list of meta_keys we need to retrieve
             $baseKeys = array_fill_keys(explode(',',$assoc_args['metadata']),'');
             foreach ($this->sites as $key=>$site) {
                 $command = sprintf('site meta list %d --keys=%s --fields=meta_key,meta_value --format=json',$site['blog_id'],$assoc_args['metadata']);
-                //@todo check for error
                 $jsonSiteMeta = WP_CLI::runcommand($command,['return'=>true]);
                 try {
                     $siteMeta = json_decode($jsonSiteMeta,true,512, JSON_THROW_ON_ERROR);
@@ -89,7 +85,7 @@ class SiteReport
 
         $progress->finish();
         //check if --format is given to use here for format
-        format_items('table',$this->sites,array_keys($this->sites[0]));
+        format_items($assoc_args['format'],$this->sites,array_keys($this->sites[0]));
     }
 }
 

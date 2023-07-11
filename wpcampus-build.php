@@ -1,6 +1,10 @@
 <?php
 ## initial command, slide 10
-if ( ! class_exists(WP_CLI::class) ) {
+if ( ! defined('WP_CLI') ) {
+    return;
+}
+
+if (!class_exists('WP_CLI')) {
     return;
 }
 

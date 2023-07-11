@@ -1,6 +1,7 @@
 <?php
 namespace gilzow\wpcli\commands;
 use \WP_CLI, \JsonException;
+use function WP_CLI\Utils\make_progress_bar;
 use function WP_CLI\Utils\format_items;
 
 if ( ! defined('WP_CLI') ) {
@@ -28,15 +29,26 @@ class SiteReport
      * ## OPTIONS
      *
      * [--metadata=<values>]
-     * : Comma-separated list of meta field values to include in the report
+     * : Comma-separated list of metadata values to include in the report
+     *
+     * [--format=<format>]
+     * : format to use for output
+     * ---
+     * default: table
+     * options
+     *  - table
+     *  - json
+     *  - csv
+     *  - yaml
+     * ---
      *
      * ## EXAMPLES
      *
-     * 		# Display a multisite report
-     * 		$ wp site report --metadata=owner,ticketnumber,division
+     *        # Display a multisite report
+     *        $ wp site report --metadata=owner,ticketnumber,division
      *
-     * @param $args
-     * @param $assoc_args
+     * @param array $args
+     * @param array $assoc_args
      * @return void
      */
     public function __invoke(array $args, array $assoc_args) : void {
@@ -47,6 +59,7 @@ class SiteReport
         if(isset($assoc_args['metadata']) && !empty($assoc_args['metadata'])) {
             $baseKeys = array_fill_keys(explode(',',$assoc_args['metadata']),'');
 //            foreach ($sites as $key=>$site) {
+//                # wp site meta list 4 --keys=owner,division --fields=meta_key,meta_value
 //                $command = sprintf('site meta list %d --keys=%s --fields=meta_key,meta_value --format=json',$site['blog_id'],$assoc_args['metadata']);
 //
 //
