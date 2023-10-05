@@ -38,7 +38,7 @@ class wpcampus
      *      You are interested in sessions on InfoSec.
      */
     public function greet($args, $assoc_args) {
-        printf("Welcome to WPCampus%s!!!" . PHP_EOL, ($args[0]) ? ", ${args[0]}" : '');
+        printf("Welcome to WPCampus%s!!!" . PHP_EOL, (isset($args[0])) ? ", ${args[0]}" : '');
         if(isset($assoc_args['subject'])) {
             echo "You are interested in sessions on ${assoc_args['subject']}.", PHP_EOL;
         }
