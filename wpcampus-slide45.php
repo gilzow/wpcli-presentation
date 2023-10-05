@@ -16,9 +16,9 @@ if ( ! defined('WP_CLI') ) {
 }
 
 WP_CLI::add_command('wpcampus greet',function ($args, $assoc_args){
-    printf("Welcome to WPCampus%s!!!" . PHP_EOL, ($args[0]) ? ", ${args[0]}" : '');
+    printf("Welcome to WPCampus%s!!!" . PHP_EOL, (isset($args[0])) ? ", ${args[0]}" : '');
 });
 
 WP_CLI::add_command('wpcampus goodbye',function ($args, $assoc_args){
-    printf("Thanks for being with us%s!!!" . PHP_EOL, ($args[0]) ? ", ${args[0]}" : '');
+    printf("Thanks for being with us%s!!!" . PHP_EOL, (isset($args[0])) ? ", ${args[0]}" : '');
 });
